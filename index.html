@@ -359,6 +359,16 @@
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
 
+        /* Product Image Style */
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
         .card i { 
             font-size: 50px; 
             color: var(--prime-gold); 
@@ -387,6 +397,19 @@
             font-weight: 600;
             font-size: 1.1rem;
             margin: 10px 0;
+        }
+
+        /* Price Style */
+        .card .price {
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 15px 0;
+            background: rgba(251, 191, 36, 0.15);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 1px dashed var(--prime-gold);
         }
 
         .btn { 
@@ -698,31 +721,52 @@
         <p class="section-subtitle">High-quality, energy-efficient LED lighting for industrial, commercial, and residential applications.</p>
         
         <div class="grid">
+            <!-- Product 1 -->
             <div class="card">
-                <i class="fas fa-home"></i>
-                <h3>LED Home Lights</h3>
+                <!-- PHOTO AREA -->
+                <img src="250W Black Choke Full Lens.jpg" alt="Home Light" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=Home+Light+Image'">
+                
+                <h3>250W Black Choke Full Lens</h3>
                 <p>Energy efficient LED lights for home and residential use with elegant designs and long lifespan.</p>
-                <div class="wattage">Range: 5W to 40W</div>
+                <div class="wattage">Range: 250W</div>
+                
+                <!-- PRICE AREA -->
+                <div class="price">Price: ₹2229*</div><br>
+
                 <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20LED%20Home%20Lights" class="btn" target="_blank">
                     <i class="fab fa-whatsapp"></i> WhatsApp Enquiry
                 </a>
             </div>
             
+            <!-- Product 2 -->
             <div class="card">
-                <i class="fas fa-industry"></i>
+                <!-- PHOTO AREA -->
+                <img src="flood-light.jpg" alt="Flood Light" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=Flood+Light+Image'">
+
                 <h3>LED Flood Lights</h3>
                 <p>High-power LED flood lights for industrial areas, stadiums, parking lots, and security lighting.</p>
                 <div class="wattage">Range: 60W, 100W, 120W, 200W, 250W</div>
+
+                <!-- PRICE AREA -->
+                <div class="price">Price: ₹1,200*</div><br>
+
                 <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20LED%20Flood%20Lights" class="btn" target="_blank">
                     <i class="fas fa-tags"></i> Get Price Quote
                 </a>
             </div>
             
+            <!-- Product 3 -->
             <div class="card" id="cob">
-                <i class="fas fa-certificate"></i>
-                <h3>COB Lights - Industrial High Power</h3>
+                <!-- PHOTO AREA -->
+                <img src="cob-light.jpg" alt="COB Light" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=COB+Light+Image'">
+
+                <h3>COB Lights - Industrial</h3>
                 <p>High-intensity COB (Chip-on-Board) lights for industrial applications requiring maximum brightness.</p>
                 <div class="wattage">Industrial High-Power Lighting</div>
+
+                <!-- PRICE AREA -->
+                <div class="price">Price: ₹2,500*</div><br>
+
                 <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20COB%20Lights" class="btn" target="_blank">
                     <i class="fas fa-industry"></i> Industrial Inquiry
                 </a>
