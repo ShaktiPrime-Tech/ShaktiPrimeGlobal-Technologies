@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShaktiPrime Global Technologies | LED & IoT Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #020c1b;
+            --shakti-white: #ffffff;
+            --prime-gold: #fbbf24;
+            --text-gray: #ccd6f6;
+            --glow-blue: rgba(0, 115, 230, 0.4);
+            --circuit-line: rgba(100, 255, 218, 0.08);
+            --card-bg: rgba(17, 34, 64, 0.6);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--shakti-white);
+            background-image: 
+                radial-gradient(circle at 80% 20%, var(--glow-blue) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, var(--glow-blue) 0%, transparent 40%),
+                linear-gradient(var(--circuit-line) 1px, transparent 1px), 
+                linear-gradient(90deg, var(--circuit-line) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+            overflow-x: hidden;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--prime-gold), #ff9900);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(2, 12, 27, 0.98);
+            padding: 18px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img { 
+            width: 50px; 
+            height: 50px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.3));
+        }
+
+        .logo-text { 
+            font-size: 26px; 
+            font-weight: bold; 
+            text-decoration: none; 
+            letter-spacing: 1px;
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .logo-text .shakti { 
+            color: var(--shakti-white); 
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+        
+        .logo-text .prime { 
+            color: var(--prime-gold); 
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .logo-text .global-tech {
+            color: var(--shakti-white);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            margin-top: 3px;
+            opacity: 0.9;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        nav a { 
+            color: var(--shakti-white); 
+            text-decoration: none; 
+            padding: 8px 15px;
+            font-weight: 500; 
+            font-size: 14px; 
+            text-transform: uppercase; 
+            transition: all 0.3s;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active { 
+            color: var(--prime-gold); 
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--prime-gold);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 70%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--prime-gold);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--glow-blue) 0%, transparent 70%);
+            filter: blur(100px);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .main-logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-logo-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            max-width: 350px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s;
+        }
+
+        .hero-logo-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--prime-gold);
+        }
+
+        .main-logo-img { 
+            width: 200px; 
+            height: auto;
+            margin-bottom: 20px; 
+            filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));
+        }
+
+        .hero h1 { 
+            font-size: 2.8rem; 
+            margin-bottom: 5px; 
+            letter-spacing: 2px;
+            color: var(--shakti-white);
+            font-weight: 700;
+        }
+
+        .hero h1 .prime { 
+            color: var(--prime-gold); 
+        }
+
+        .hero .global-tech-text { 
+            color: var(--shakti-white); 
+            font-size: 1.8rem; 
+            letter-spacing: 3px; 
+            font-weight: 500;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .hero .tagline {
+            color: var(--prime-gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .hero .subtitle {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            margin-top: 15px;
+            font-weight: normal;
+            opacity: 0.9;
+            max-width: 700px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .industry-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .industry-tag {
+            background: rgba(251, 191, 36, 0.1);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: var(--prime-gold);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections Styling */
+        .section { 
+            padding: 80px 8%; 
+            position: relative;
+        }
+
+        .section-title { 
+            color: var(--prime-gold); 
+            font-size: 2.2rem; 
+            margin-bottom: 40px; 
+            border-left: 5px solid var(--prime-gold); 
+            padding-left: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-subtitle {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            border: 1px solid rgba(251, 191, 36, 0.1); 
+            border-radius: 15px; 
+            padding: 35px 25px; 
+            text-align: center; 
+            transition: all 0.4s;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.1), transparent);
+            transition: left 0.7s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover { 
+            border-color: var(--prime-gold); 
+            transform: translateY(-12px); 
+            background: rgba(17, 34, 64, 0.8);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card i { 
+            font-size: 50px; 
+            color: var(--prime-gold); 
+            margin-bottom: 25px; 
+            transition: transform 0.3s;
+        }
+
+        .card:hover i {
+            transform: scale(1.1);
+        }
+
+        .card h3 { 
+            font-size: 1.5rem; 
+            margin-bottom: 15px; 
+            color: var(--shakti-white);
+        }
+
+        .card p { 
+            color: var(--text-gray); 
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card .wattage {
+            color: var(--prime-gold);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        .btn { 
+            background: var(--prime-gold); 
+            color: #020c1b; 
+            padding: 14px 28px; 
+            border-radius: 6px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            display: inline-block; 
+            margin-top: 15px; 
+            transition: all 0.3s;
+            border: 2px solid var(--prime-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover { 
+            background: transparent; 
+            color: var(--prime-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(251, 191, 36, 0.2);
+        }
+
+        /* Alternate Section Background */
+        .alt-bg {
+            background: rgba(10, 25, 47, 0.4);
+            border-radius: 20px;
+            margin: 20px 0;
+        }
+
+        /* Contact Section */
+        footer { 
+            background: #010813; 
+            padding: 80px 8% 30px; 
+            border-top: 2px solid var(--prime-gold); 
+            margin-top: 60px;
+        }
+
+        .footer-content { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: space-between; 
+            gap: 50px; 
+            margin-bottom: 50px;
+        }
+
+        .contact-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-box h3 { 
+            color: var(--prime-gold); 
+            margin-bottom: 25px; 
+            font-size: 1.8rem;
+            border-bottom: 2px solid rgba(251, 191, 36, 0.3);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .contact-item { 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            font-size: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateX(5px);
+        }
+
+        .contact-item i { 
+            color: var(--prime-gold); 
+            width: 25px;
+            font-size: 1.2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(251, 191, 36, 0.1);
+            color: var(--prime-gold);
+            border-radius: 50%;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--prime-gold);
+            color: #020c1b;
+            transform: translateY(-5px);
+        }
+
+        .map-box { 
+            flex: 1; 
+            min-width: 300px; 
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .map-box iframe { 
+            width: 100%; 
+            height: 300px; 
+            border: none;
+        }
+
+        .copyright {
+            text-align: center; 
+            margin-top: 50px; 
+            font-size: 14px; 
+            color: #777;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--prime-gold);
+            color: #020c1b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 2.4rem; }
+            .hero .global-tech-text { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            header { 
+                padding: 15px; 
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(2, 12, 27, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s;
+                border-top: 1px solid rgba(251, 191, 36, 0.2);
+                backdrop-filter: blur(10px);
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav a { 
+                margin: 0; 
+                font-size: 14px; 
+                padding: 12px;
+                text-align: center;
+                border-radius: 6px;
+            }
+            
+            .hero h1 { font-size: 2rem; }
+            
+            .hero .global-tech-text { 
+                font-size: 1.2rem; 
+                letter-spacing: 2px;
+            }
+            
+            .main-logo-img { 
+                width: 180px; 
+            }
+            
+            .hero-logo-card {
+                padding: 25px;
+            }
+            
+            .section-title { 
+                font-size: 1.8rem; 
+            }
+            
+            .grid { 
+                grid-template-columns: 1fr; 
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero .global-tech-text { font-size: 1rem; }
+            .section { padding: 60px 5%; }
+            .logo-text .shakti,
+            .logo-text .prime { 
+                font-size: 22px; 
+            }
+            .logo-text .global-tech {
+                font-size: 10px;
+                letter-spacing: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+    
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="ShaktiPrime Logo" class="logo-img" onerror="this.style.display='none'">
+            <a href="#home" class="logo-text">
+                <span class="shakti">Shakti</span><span class="prime">Prime</span>
+                <span class="global-tech">GLOBAL TECHNOLOGIES</span>
+            </a>
+        </div>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav id="mainNav">
+            <a href="#home" class="active">Home</a>
+            <a href="#led">LED Lighting</a>
+            <a href="#iot">IoT Solutions</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="main-logo-section">
+            <div class="hero-logo-card">
+                <img src="logo.png" alt="ShaktiPrime Logo" class="main-logo-img" onerror="this.style.display='none'">
+                <h1>Shakti<span class="prime">Prime</span></h1>
+                <div class="global-tech-text">GLOBAL TECHNOLOGIES</div>
+            </div>
+            
+            <div class="hero-logo-card">
+                <h2 style="color: var(--prime-gold); margin-bottom: 20px; font-size: 1.8rem;">ShaktiPrime Global Technologies</h2>
+                <p class="tagline">Manufacturers of LED Flood Lights</p>
+                <div class="industry-tags">
+                    <div class="industry-tag">Electronics</div>
+                    <div class="industry-tag">Automation</div>
+                    <div class="industry-tag">IoT Solutions</div>
+                </div>
+                <p class="subtitle">Arduino | ESP32 | Industrial Projects</p>
+            </div>
+        </div>
+        
+        <a href="#contact" class="btn" style="margin-top: 30px;">Contact Us Now</a>
+    </section>
+
+    <!-- LED Lighting Section -->
+    <section class="section" id="led">
+        <h2 class="section-title">LED Lighting Solutions</h2>
+        <p class="section-subtitle">High-quality, energy-efficient LED lighting for industrial, commercial, and residential applications.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-home"></i>
+                <h3>LED Home Lights</h3>
+                <p>Energy efficient LED lights for home and residential use with elegant designs and long lifespan.</p>
+                <div class="wattage">Range: 5W to 40W</div>
+                <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20LED%20Home%20Lights" class="btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Enquiry
+                </a>
+            </div>
+            
+            <div class="card">
+                <i class="fas fa-industry"></i>
+                <h3>LED Flood Lights</h3>
+                <p>High-power LED flood lights for industrial areas, stadiums, parking lots, and security lighting.</p>
+                <div class="wattage">Range: 60W, 100W, 120W, 200W, 250W</div>
+                <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20LED%20Flood%20Lights" class="btn" target="_blank">
+                    <i class="fas fa-tags"></i> Get Price Quote
+                </a>
+            </div>
+            
+            <div class="card" id="cob">
+                <i class="fas fa-certificate"></i>
+                <h3>COB Lights - Industrial High Power</h3>
+                <p>High-intensity COB (Chip-on-Board) lights for industrial applications requiring maximum brightness.</p>
+                <div class="wattage">Industrial High-Power Lighting</div>
+                <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20COB%20Lights" class="btn" target="_blank">
+                    <i class="fas fa-industry"></i> Industrial Inquiry
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- IoT Projects Section -->
+    <section class="section alt-bg" id="iot">
+        <h2 class="section-title">IoT & Automation Solutions</h2>
+        <p class="section-subtitle">Custom IoT projects and automation solutions for educational institutions and industrial applications.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-microchip"></i>
+                <h3>Arduino Solutions</h3>
+                <p>School & Industrial Projects</p>
+                <p>Custom Arduino-based projects for automation, robotics, and educational demonstrations. We provide complete kits with documentation.</p>
+                <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20Arduino%20Projects" class="btn">
+                    <i class="fas fa-project-diagram"></i> Project Inquiry
+                </a>
+            </div>
+            
+            <div class="card" id="esp32">
+                <i class="fas fa-wifi"></i>
+                <h3>ESP32 Automation</h3>
+                <p>Wireless IoT & Smart Controls</p>
+                <p>Wi-Fi and Bluetooth enabled IoT solutions for home automation, industrial monitoring, and smart control systems.</p>
+                <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20ESP32%20IoT%20Solutions" class="btn">
+                    <i class="fas fa-cogs"></i> Custom Solution
+                </a>
+            </div>
+            
+            <div class="card">
+                <i class="fas fa-robot"></i>
+                <h3>Industrial Projects</h3>
+                <p>Custom Automation & Control Systems</p>
+                <p>Tailored industrial automation solutions including PLC systems, motor controls, and production line automation.</p>
+                <a href="https://wa.me/9199729227523?text=Hello%20ShaktiPrime,%20I'm%20interested%20in%20Industrial%20Automation%20Projects" class="btn">
+                    <i class="fas fa-industry"></i> Industrial Solutions
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="contact-box">
+                <h3>Contact Us</h3>
+                
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <strong>Phone:</strong><br>
+                        +91 99729 227523<br>
+                        +91 84602 42425
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email:</strong><br>
+                        info@shaktiprime.com
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Address:</strong><br>
+                        28, Shreeji Row House,<br>
+                        Amroli To Chhaprabhatha Road,<br>
+                        Amroli, Surat, Gujarat
+                    </div>
+                </div>
+                
+                <div class="social-links">
+                    <a href="https://wa.me/9199729227523" target="_blank" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="mailto:info@shaktiprime.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="#" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="map-box">
+                <!-- Google Maps Embed for Surat, Gujarat -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.525424579026!2d72.83961037506129!3d21.12714108054755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be0521d48d6e6a9%3A0xa421066b8b5c7b5d!2sAmroli%2C%20Surat%2C%20Gujarat%2C%20India!5e0!3m2!1sen!2sus!4v1647791696891!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            © 2026 ShaktiPrime Global Technologies. All Rights Reserved.<br>
+            <small>LED Lighting & IoT Solutions Manufacturer</small>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Scroll Progress Bar
+        const scrollProgress = document.querySelector('.scroll-progress');
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / windowHeight) * 100;
+            scrollProgress.style.width = `${scrolled}%`;
+        });
+        
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // Active Navigation Link on Scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Logo fallback if image doesn't load
+        const logoImg = document.querySelector('.main-logo-img');
+        if (logoImg) {
+            logoImg.addEventListener('error', function() {
+                this.style.display = 'none';
+                const logoText = document.createElement('div');
+                logoText.innerHTML = '<div style="font-size: 3rem; font-weight: 800; margin-bottom: 20px;"><span style="color:white">Shakti</span><span style="color:#fbbf24">Prime</span></div>';
+                this.parentNode.insertBefore(logoText, this.nextSibling);
+            });
+        }
+        
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe cards for animation
+        document.querySelectorAll('.card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
